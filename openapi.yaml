@@ -138,35 +138,51 @@ paths:
           description: Invalid input
         '422':
           description: Validation exception
-  /getVersions:
+  /version:
     get:
       tags:
         - versions
-      summary: Получение версий
+      summary: Получение статистики о мобильного клиента
       requestBody:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/VersionRequest'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/VersionRequest'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components/schemas/VersionRequest'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components/schemas/VersionResponse'
         '400':
           description: Invalid input
-        '422':
-          description: Validation exception
+        '500':
+          description: Internal service error
 components:
   schemas:
+    VersionRequest:
+      type: object
+      properties:
+        mobileVersion:
+          type: string
+    VersionResponse:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: Invalid request format
     Order:
       type: object
       properties:
