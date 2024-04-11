@@ -90,20 +90,20 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components2/schemas/create'
+              $ref: '#/components1/schemas/create'
           application/xml:
             schema:
-              $ref: '#/components2/schemas/create'
+              $ref: '#/components1/schemas/create'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components2/schemas/create'
+              $ref: '#/components1/schemas/create'
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components2/schemas/create1'
+                $ref: '#/components1/schemas/create1'
         '400':
           description: invalid request format
   /send:
@@ -115,26 +115,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components3/schemas/send'
+              $ref: '#/components1/schemas/send'
           application/xml:
             schema:
-              $ref: '#/components3/schemas/send'
+              $ref: '#/components1/schemas/send'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components3/schemas/send'
+              $ref: '#/components1/schemas/send'
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components3/schemas/send1'
+                $ref: '#/components1/schemas/send1'
         '500':
           description: internal service error  operation
           content:
             application/json:
               schema:
-                $ref: '#/components3/schemas/send2'
+                $ref: '#/components1/schemas/send2'
   /version:
     get:
       tags:
@@ -180,10 +180,6 @@ components1:
           items:
             type: string
             example: ошибка
-            
-            
-components2:
-  schemas:
     create:
       type: object
       properties:
@@ -206,8 +202,6 @@ components2:
           items:
             type: string
             example: successful           
-components3:
-  schemas:
     send:
       type: object
       properties:
