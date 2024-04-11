@@ -66,24 +66,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/Getmessages'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/Getmessages'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/Getmessages'
       responses:
         '200':
-          description: successful operation
+          description: ошибка
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+                $ref: '#/components1/schemas/Getmessages1'
+       
   /create:
     post:
       tags:
@@ -93,24 +90,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components2/schemas/create'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components2/schemas/create'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components2/schemas/create'
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components2/schemas/create1'
         '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+          description: invalid request format
   /send:
     post:
       tags:
@@ -120,24 +115,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components3/schemas/send'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components3/schemas/send'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components3/schemas/send'
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+                $ref: '#/components3/schemas/send1'
+        '500':
+          description: internal service error  operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components3/schemas/send2'
   /version:
     get:
       tags:
@@ -165,6 +162,86 @@ paths:
           description: Invalid input
         '500':
           description: Internal service error
+components1:
+  schemas:
+    Getmessages:
+      type: object
+      properties:
+        mobileVersion:
+          type: string
+    Getmessages1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: ошибка
+            
+            
+components2:
+  schemas:
+    create:
+      type: object
+      properties:
+        PhoneNum:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+        Time to send:
+          type: DataTime
+    create1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful           
+components3:
+  schemas:
+    send:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        Time to send:
+          type: DataTime
+        PhoneNum:
+          type: string  
+    send1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 200
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful  
+    send2:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 500
+        msg:
+          type: array
+          items:
+            type: string
+            example: internal service error          
+          
 components:
   schemas:
     VersionRequest:
