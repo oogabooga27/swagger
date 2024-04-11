@@ -1,0 +1,463 @@
+openapi: 3.0.3
+info:
+  title: Swagger
+  version: 1.0.0
+paths:
+  /user:
+    post:
+      tags:
+        - user
+      summary: Регистрация мобильного клиента
+      requestBody:
+        description: Update an existent pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Pet'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/Pet'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Pet'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Pet'          
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/Pet'
+        '400':
+          description: Invalid ID supplied
+        '404':
+          description: Pet not found
+        '422':
+          description: Validation exception
+      security:
+        - petstore_auth:
+            - write:pets
+            - read:pets
+    delete:
+      tags:
+        - user
+      summary: Удаление мобильного клиента
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: integer
+                  format: int32
+      security:
+        - api_key: []
+  /getMessages:
+    get:
+      tags:
+        - notification
+      summary: Получение отправленных уведомлений
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components1/schemas/Getmessages'
+          application/xml:
+            schema:
+              $ref: '#/components1/schemas/Getmessages'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components1/schemas/Getmessages'
+      responses:
+        '200':
+          description: ошибка
+          content:
+            application/json:
+              schema:
+                $ref: '#/components1/schemas/Getmessages1'
+       
+  /create:
+    post:
+      tags:
+        - notification
+      summary: Создание уведомления
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components2/schemas/create'
+          application/xml:
+            schema:
+              $ref: '#/components2/schemas/create'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components2/schemas/create'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components2/schemas/create1'
+        '400':
+          description: invalid request format
+  /send:
+    post:
+      tags:
+        - notification
+      summary: Создание уведомления
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components3/schemas/send'
+          application/xml:
+            schema:
+              $ref: '#/components3/schemas/send'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components3/schemas/send'
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components3/schemas/send1'
+        '500':
+          description: internal service error  operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components3/schemas/send2'
+  /version:
+    get:
+      tags:
+        - versions
+      summary: Получение статистики о мобильного клиента
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VersionRequest'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/VersionRequest'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/VersionRequest'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VersionResponse'
+        '400':
+          description: Invalid input
+        '500':
+          description: Internal service error
+components1:
+  schemas:
+    Getmessages:
+      type: object
+      properties:
+        mobileVersion:
+          type: string
+    Getmessages1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: ошибка
+            
+            
+components2:
+  schemas:
+    create:
+      type: object
+      properties:
+        PhoneNum:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+        Time to send:
+          type: DataTime
+    create1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful           
+components3:
+  schemas:
+    send:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        Time to send:
+          type: DataTime
+        PhoneNum:
+          type: string  
+    send1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 200
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful  
+    send2:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 500
+        msg:
+          type: array
+          items:
+            type: string
+            example: internal service error          
+          
+components:
+  schemas:
+    VersionRequest:
+      type: object
+      properties:
+        mobileVersion:
+          type: string
+    VersionResponse:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: Invalid request format
+    Order:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        petId:
+          type: integer
+          format: int64
+          example: 198772
+        quantity:
+          type: integer
+          format: int32
+          example: 7
+        shipDate:
+          type: string
+          format: date-time
+        status:
+          type: string
+          description: Order Status
+          example: approved
+          enum:
+            - placed
+            - approved
+            - delivered
+        complete:
+          type: boolean
+      xml:
+        name: order
+    Customer:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 100000
+        username:
+          type: string
+          example: fehguy
+        address:
+          type: array
+          xml:
+            name: addresses
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Address'
+      xml:
+        name: customer
+    Address:
+      type: object
+      properties:
+        street:
+          type: string
+          example: 437 Lytton
+        city:
+          type: string
+          example: Palo Alto
+        state:
+          type: string
+          example: CA
+        zip:
+          type: string
+          example: '94301'
+      xml:
+        name: address
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 1
+        name:
+          type: string
+          example: Dogs
+      xml:
+        name: category
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        username:
+          type: string
+          example: theUser
+        firstName:
+          type: string
+          example: John
+        lastName:
+          type: string
+          example: James
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+          example: '12345'
+        phone:
+          type: string
+          example: '12345'
+        userStatus:
+          type: integer
+          description: User Status
+          format: int32
+          example: 1
+      xml:
+        name: user
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+      xml:
+        name: tag
+    Pet:
+      required:
+        - name
+        - photoUrls
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 10
+        name:
+          type: string
+          example: doggie
+        category:
+          $ref: '#/components/schemas/Category'
+        photoUrls:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            type: string
+            xml:
+              name: photoUrl
+        tags:
+          type: array
+          xml:
+            wrapped: true
+          items:
+            $ref: '#/components/schemas/Tag'
+        status:
+          type: string
+          description: pet status in the store
+          enum:
+            - available
+            - pending
+            - sold
+      xml:
+        name: pet
+    ApiResponse:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+      xml:
+        name: '##default'
+  requestBodies:
+    Pet:
+      description: Pet object that needs to be added to the store
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Pet'
+        application/xml:
+          schema:
+            $ref: '#/components/schemas/Pet'
+    UserArray:
+      description: List of user object
+      content:
+        application/json:
+          schema:
+            type: array
+            items:
+              $ref: '#/components/schemas/User'
+  securitySchemes:
+    petstore_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://petstore3.swagger.io/oauth/authorize
+          scopes:
+            write:pets: modify pets in your account
+            read:pets: read your pets
+    api_key:
+      type: apiKey
+      name: api_key
+      in: header
