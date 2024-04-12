@@ -13,13 +13,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: '#/components2/schemas/user1'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: '#/components2/schemas/user1'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: '#/components2/schemas/user1'
         required: true
       responses:
         '200':
@@ -27,34 +27,56 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pet'          
+                $ref: '#/components2/schemas/user2'          
             application/xml:
               schema:
-                $ref: '#/components/schemas/Pet'
+                $ref: '#/components2/schemas/user2'
         '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
-        '422':
-          description: Validation exception
+          description: invalid request forma
+        '500':
+          description: internal service erro
       security:
         - petstore_auth:
             - write:pets
-            - read:pets
+            - read:pets    
     delete:
       tags:
         - user
       summary: Удаление мобильного клиента
+      requestBody:
+        description: Update an existent pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components2/schemas/userdelete'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
+                $ref: '#/components2/schemas/userdelete2'          
+            application/xml:
+              schema:
+                $ref: '#/components2/schemas/userdelete2'
+        '400':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components2/schemas/userdelete3'          
+            application/xml:
+              schema:
+                $ref: '#/components2/schemas/userdelete3'
+        '401':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components2/schemas/userdelete4'          
+            application/xml:
+              schema:
+                $ref: '#/components2/schemas/userdelete4'        
       security:
         - api_key: []
   /getMessages:
@@ -66,24 +88,21 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/Getmessages'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/Getmessages'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/Getmessages'
       responses:
         '200':
-          description: successful operation
+          description: ошибка
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+                $ref: '#/components1/schemas/Getmessages1'
+       
   /create:
     post:
       tags:
@@ -93,24 +112,22 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/create'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/create'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/create'
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
+                $ref: '#/components1/schemas/create1'
         '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+          description: invalid request format
   /send:
     post:
       tags:
@@ -120,24 +137,26 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/send'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/send'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Order'
+              $ref: '#/components1/schemas/send'
       responses:
         '200':
           description: successful operation
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Order'
-        '400':
-          description: Invalid input
-        '422':
-          description: Validation exception
+                $ref: '#/components1/schemas/send1'
+        '500':
+          description: internal service error  operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components1/schemas/send2'
   /version:
     get:
       tags:
@@ -165,6 +184,140 @@ paths:
           description: Invalid input
         '500':
           description: Internal service error
+components2:
+  schemas:
+    user1:
+      type: object
+      properties:
+        FB Token:
+          type: string
+        PhoneNum:
+          type: string
+        mobileVersion: 
+          type: string
+    user2:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 200
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful  
+    userdelete:
+      type: object
+      properties:
+        UserID:
+          type: string
+    userdelete2:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 200
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful  
+    userdelete3:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: invalid request forma 
+    userdelete4:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: unauthorized action       
+components1:
+  schemas:
+    Getmessages:
+      type: object
+      properties:
+        mobileVersion:
+          type: string
+    Getmessages1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: ошибка
+    create:
+      type: object
+      properties:
+        PhoneNum:
+          type: string
+        title:
+          type: string
+        message:
+          type: string
+        Time to send:
+          type: DataTime
+    create1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful           
+    send:
+      type: object
+      properties:
+        title:
+          type: string
+        text:
+          type: string
+        Time to send:
+          type: DataTime
+        PhoneNum:
+          type: string  
+    send1:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 200
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful  
+    send2:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 500
+        msg:
+          type: array
+          items:
+            type: string
+            example: internal service error          
+          
 components:
   schemas:
     VersionRequest:
@@ -264,10 +417,10 @@ components:
     User:
       type: object
       properties:
-        id:
+        fb token:
           type: integer
           format: int64
-          example: 10
+          example: 11
         username:
           type: string
           example: theUser
