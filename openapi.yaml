@@ -13,13 +13,13 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: '#/components2/schemas/user1'
           application/xml:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: '#/components2/schemas/user1'
           application/x-www-form-urlencoded:
             schema:
-              $ref: '#/components/schemas/Pet'
+              $ref: '#/components2/schemas/user1'
         required: true
       responses:
         '200':
@@ -27,34 +27,56 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Pet'          
+                $ref: '#/components2/schemas/user2'          
             application/xml:
               schema:
-                $ref: '#/components/schemas/Pet'
+                $ref: '#/components2/schemas/user2'
         '400':
-          description: Invalid ID supplied
-        '404':
-          description: Pet not found
-        '422':
-          description: Validation exception
+          description: invalid request forma
+        '500':
+          description: internal service erro
       security:
         - petstore_auth:
             - write:pets
-            - read:pets
+            - read:pets    
     delete:
       tags:
         - user
       summary: Удаление мобильного клиента
+      requestBody:
+        description: Update an existent pet in the store
+        content:
+          application/json:
+            schema:
+              $ref: '#/components2/schemas/userdelete'
       responses:
         '200':
-          description: successful operation
+          description: Successful operation
           content:
             application/json:
               schema:
-                type: object
-                additionalProperties:
-                  type: integer
-                  format: int32
+                $ref: '#/components2/schemas/userdelete2'          
+            application/xml:
+              schema:
+                $ref: '#/components2/schemas/userdelete2'
+        '400':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components2/schemas/userdelete3'          
+            application/xml:
+              schema:
+                $ref: '#/components2/schemas/userdelete3'
+        '401':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components2/schemas/userdelete4'          
+            application/xml:
+              schema:
+                $ref: '#/components2/schemas/userdelete4'        
       security:
         - api_key: []
   /getMessages:
@@ -162,6 +184,66 @@ paths:
           description: Invalid input
         '500':
           description: Internal service error
+components2:
+  schemas:
+    user1:
+      type: object
+      properties:
+        FB Token:
+          type: string
+        PhoneNum:
+          type: string
+        mobileVersion: 
+          type: string
+    user2:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 200
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful  
+    userdelete:
+      type: object
+      properties:
+        UserID:
+          type: string
+    userdelete2:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 200
+        msg:
+          type: array
+          items:
+            type: string
+            example: successful  
+    userdelete3:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: invalid request forma 
+    userdelete4:
+      type: object
+      properties:
+        code: 
+          type: string
+          example: 400
+        msg:
+          type: array
+          items:
+            type: string
+            example: unauthorized action       
 components1:
   schemas:
     Getmessages:
@@ -335,10 +417,10 @@ components:
     User:
       type: object
       properties:
-        id:
+        fb token:
           type: integer
           format: int64
-          example: 10
+          example: 11
         username:
           type: string
           example: theUser
